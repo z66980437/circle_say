@@ -14,7 +14,7 @@ class Friends(models.Model):
     is_delete = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'friends'
 
 
@@ -36,7 +36,7 @@ class User(models.Model):
     circles = models.ManyToManyField(Circle, through='UserCircle')
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'user'
 
 
@@ -45,7 +45,7 @@ class UserCircle(models.Model):
     user = models.ForeignKey(User, models.DO_NOTHING)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'user_circle'
         unique_together = (('circle', 'user'),)
 
@@ -57,5 +57,5 @@ class UserRec(models.Model):
     time = models.DateTimeField()
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'user_rec'

@@ -21,7 +21,7 @@ class Circle(models.Model):
     is_delete = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'circle'
 
 
@@ -33,6 +33,6 @@ class CircleRec(models.Model):
     month = models.DateField()
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'circle_rec'
 

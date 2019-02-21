@@ -10,7 +10,7 @@ class SceImg(models.Model):
     img_url = models.CharField(max_length=512)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'sce_img'
 
 
@@ -26,5 +26,5 @@ class Scenic(models.Model):
     cover = models.CharField(max_length=512, blank=True, null=True)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'scenic'
