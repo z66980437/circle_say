@@ -82,14 +82,22 @@ WSGI_APPLICATION = 'circle_say.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-  'default': {
+  # 'default': {
+  #     'ENGINE': 'django.db.backends.mysql',
+  #     'NAME': 'circle_say',
+  #     'USER': 'root',
+  #     'PASSWORD': '123456',
+  #     'HOST': '47.107.226.94',
+  #     'PORT': 3306
+  # },
+    'default': {
       'ENGINE': 'django.db.backends.mysql',
       'NAME': 'circle_say',
       'USER': 'root',
       'PASSWORD': '123456',
-      'HOST': '127.0.0.1',
+      'HOST': '47.107.163.85',
       'PORT': 3306
-  }
+    }
 }
 
 

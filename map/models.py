@@ -10,7 +10,7 @@ class City(models.Model):
     sce_nums = models.IntegerField()
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'city'
 
 
@@ -20,7 +20,7 @@ class Province(models.Model):
     sce_nums = models.IntegerField()
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'province'
 
 
@@ -31,5 +31,5 @@ class Region(models.Model):
     sce_nums = models.IntegerField()
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'region'

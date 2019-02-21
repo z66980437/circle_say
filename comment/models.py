@@ -15,7 +15,7 @@ class Comment(models.Model):
     clap = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'comment'
 
 
@@ -25,5 +25,5 @@ class ComImg(models.Model):
     img_url = models.CharField(max_length=512)
 
     class Meta:
-        managed = False
+        # managed = False
         db_table = 'com_img'
