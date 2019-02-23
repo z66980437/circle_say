@@ -8,10 +8,10 @@ from scenic.models import Scenic
 
 class Friends(models.Model):
     friends_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True)
-    add_time = models.DateTimeField()
-    is_show = models.IntegerField(blank=True, null=True)
-    is_delete = models.IntegerField(blank=True, null=True)
+    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True, verbose_name='用户')
+    add_time = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='添加时间')
+    is_show = models.IntegerField(blank=True, null=True, verbose_name='是否对其展示足迹')
+    is_delete = models.IntegerField(blank=True, null=True, verbose_name='黑名单等操作相关')
 
     class Meta:
         # managed = False
@@ -20,20 +20,20 @@ class Friends(models.Model):
 
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
-    region = models.ForeignKey(Region, models.DO_NOTHING, blank=True, null=True)
-    username = models.CharField(max_length=16)
-    password = models.CharField(max_length=512)
-    nickname = models.CharField(max_length=16)
-    real_name = models.CharField(max_length=16, blank=True, null=True)
-    age = models.IntegerField(blank=True, null=True)
-    gender = models.IntegerField(blank=True, null=True)
-    card_id = models.CharField(max_length=18, blank=True, null=True)
-    tel = models.CharField(max_length=16, blank=True, null=True)
-    email = models.CharField(max_length=32, blank=True, null=True)
-    avatar = models.CharField(max_length=512, blank=True, null=True)
-    signature = models.CharField(max_length=256, blank=True, null=True)
-    is_delete = models.IntegerField(blank=True, null=True)
-    circles = models.ManyToManyField(Circle, through='UserCircle')
+    region = models.ForeignKey(Region, models.DO_NOTHING, blank=True, null=True, verbose_name='区')
+    username = models.CharField(max_length=16, verbose_name='用户账号')
+    password = models.CharField(max_length=512, verbose_name='密码')
+    nickname = models.CharField(max_length=16, verbose_name='昵称')
+    real_name = models.CharField(max_length=16, blank=True, null=True, verbose_name='真实姓名')
+    age = models.IntegerField(blank=True, null=True, verbose_name='活了多久')
+    gender = models.IntegerField(blank=True, null=True, verbose_name='性别')
+    card_id = models.CharField(max_length=18, blank=True, null=True, verbose_name='身份证号')
+    tel = models.CharField(max_length=16, blank=True, null=True, verbose_name='电话号码')
+    email = models.CharField(max_length=32, blank=True, null=True, verbose_name='邮箱')
+    avatar = models.CharField(max_length=512, blank=True, null=True, verbose_name='头像')
+    signature = models.CharField(max_length=256, blank=True, null=True, verbose_name='个性签名')
+    is_delete = models.IntegerField(blank=True, null=True, verbose_name='是否删除')
+    circles = models.ManyToManyField(Circle, through='UserCircle', verbose_name='所加的圈子')
 
     class Meta:
         # managed = False
@@ -41,8 +41,8 @@ class User(models.Model):
 
 
 class UserCircle(models.Model):
-    circle = models.ForeignKey(Circle, models.DO_NOTHING, primary_key=True)
-    user = models.ForeignKey(User, models.DO_NOTHING)
+    circle = models.ForeignKey(Circle, models.DO_NOTHING, primary_key=True, verbose_name='圈子')
+    user = models.ForeignKey(User, models.DO_NOTHING, verbose_name='用户')
 
     class Meta:
         # managed = False
@@ -52,9 +52,9 @@ class UserCircle(models.Model):
 
 class UserRec(models.Model):
     user_rec_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
-    scenic = models.ForeignKey(Scenic, models.DO_NOTHING, blank=True, null=True)
-    time = models.DateTimeField()
+    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True, verbose_name='用户')
+    scenic = models.ForeignKey(Scenic, models.DO_NOTHING, blank=True, null=True, verbose_name='景点')
+    rec_time = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='打卡时间')
 
     class Meta:
         # managed = False
