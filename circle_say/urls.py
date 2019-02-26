@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from circle_say import settings
+
 urlpatterns = [
     path('user/', include(('user.urls', 'user'), namespace='user')),
     path('map/', include(('map.urls', 'map'), namespace='map')),
@@ -24,3 +26,8 @@ urlpatterns = [
     path('post/', include(('post.urls', 'post'), namespace='post')),
     path('comment/', include(('comment.urls', 'comment'), namespace='comment')),
 ]
+if settings.DEBUG:
+
+    import debug_toolbar
+
+    urlpatterns.insert(0, path('__debug__/', include(debug_toolbar.urls)))

@@ -6,9 +6,10 @@ from map.models import Region
 from scenic.models import Scenic
 
 
-class Friends(models.Model):
-    friends_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=True, verbose_name='用户')
+class Relation(models.Model):
+    relation_id = models.AutoField(primary_key=True, db_column='pk')
+    user = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=False, verbose_name='用户', related_name='user')
+    friend = models.ForeignKey('User', models.DO_NOTHING, blank=True, null=False, verbose_name='朋友', related_name='friend')
     add_time = models.DateTimeField(auto_now_add=True, null=True, blank=True, verbose_name='添加时间')
     is_show = models.IntegerField(blank=True, null=True, verbose_name='是否对其展示足迹')
     is_delete = models.IntegerField(blank=True, null=True, verbose_name='黑名单等操作相关')
@@ -34,6 +35,7 @@ class User(models.Model):
     signature = models.CharField(max_length=256, blank=True, null=True, verbose_name='个性签名')
     is_delete = models.IntegerField(blank=True, null=True, verbose_name='是否删除')
     circles = models.ManyToManyField(Circle, through='UserCircle', verbose_name='所加的圈子')
+    # friends = models.ManyToManyField('self', through='Relation')
 
     class Meta:
         # managed = False
@@ -41,13 +43,12 @@ class User(models.Model):
 
 
 class UserCircle(models.Model):
-    circle = models.ForeignKey(Circle, models.DO_NOTHING, primary_key=True, verbose_name='圈子')
+    circle = models.ForeignKey(Circle, models.DO_NOTHING, verbose_name='圈子')
     user = models.ForeignKey(User, models.DO_NOTHING, verbose_name='用户')
 
     class Meta:
         # managed = False
         db_table = 'user_circle'
-        unique_together = (('circle', 'user'),)
 
 
 class UserRec(models.Model):
