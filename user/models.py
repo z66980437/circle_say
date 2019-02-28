@@ -60,12 +60,12 @@ class User(models.Model):
 class UserCircle(models.Model):
     circle = models.ForeignKey(Circle, models.DO_NOTHING, verbose_name='圈子')
     user = models.ForeignKey(User, models.DO_NOTHING, verbose_name='用户')
+    privg = models.IntegerField(default=0, verbose_name="权限，0：圈主，1：管理员， 2：群众")
 
     class Meta:
         # managed = False
         db_table = 'user_circle'
         unique_together = ('circle', 'user')
-
 
 class UserRec(models.Model):
     user_rec_id = models.AutoField(primary_key=True)
