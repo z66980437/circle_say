@@ -21,7 +21,7 @@ class Comment(models.Model):
 
 class ComImg(models.Model):
     com_img_id = models.AutoField(primary_key=True)
-    comment = models.ForeignKey('Comment', models.DO_NOTHING, blank=True, null=True, verbose_name='评论')
+    comment = models.ForeignKey('Comment', models.CASCADE, blank=True, null=True, verbose_name='评论')
     img_url = models.CharField(max_length=512, verbose_name='评论图片')
 
     class Meta:
