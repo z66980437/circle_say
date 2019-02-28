@@ -19,6 +19,20 @@ class Relation(models.Model):
         db_table = 'friends'
 
 
+class LoginLog(models.Model):
+    """登录日志"""
+
+    logid = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey('User', on_delete=models.DO_NOTHING, db_column='userid')
+    ipaddr = models.CharField(max_length=255)
+    logdate = models.DateTimeField(auto_now_add=True)
+    devcode = models.CharField(max_length=255, default='', null=True)
+
+    class Meta:
+        # managed = False
+        db_table = 'login_log'
+
+
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
     region = models.ForeignKey(Region, models.DO_NOTHING, blank=True, null=True, verbose_name='区')
@@ -34,6 +48,7 @@ class User(models.Model):
     avatar = models.CharField(max_length=512, blank=True, null=True, verbose_name='头像')
     signature = models.CharField(max_length=256, blank=True, null=True, verbose_name='个性签名')
     is_delete = models.IntegerField(blank=True, null=True, verbose_name='是否删除')
+    lastvisit = models.DateTimeField(null=True, blank=True, auto_now_add=True)
     circles = models.ManyToManyField(Circle, through='UserCircle', verbose_name='所加的圈子')
     # friends = models.ManyToManyField('self', through='Relation')
 
@@ -49,6 +64,7 @@ class UserCircle(models.Model):
     class Meta:
         # managed = False
         db_table = 'user_circle'
+        unique_together = ('circle', 'user')
 
 
 class UserRec(models.Model):

@@ -143,7 +143,8 @@ DATABASES = {
       'USER': 'root',
       'PASSWORD': '123456',
       'HOST': '47.107.163.85',
-      'PORT': 3306
+      'PORT': 3306,
+      'TIME_ZONE': 'Asia/Chongqing'
     }
 }
 
