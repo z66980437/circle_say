@@ -19,6 +19,7 @@ class Circle(models.Model):
     abstract = models.CharField(max_length=512, blank=True, null=True, verbose_name='简介')
     user_nums = models.IntegerField(default=0, verbose_name='目前用户数')
     is_delete = models.IntegerField(blank=True, null=True)
+    scenics = models.ManyToManyField(Scenic, through='CircleRec')
 
     class Meta:
         # managed = False
