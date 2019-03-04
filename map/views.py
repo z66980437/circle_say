@@ -9,6 +9,7 @@ from circle.models import Circle
 from map.models import City, Region
 from map.serializers import CitySerializer, RegionSerializer, ScenicSimpleSerializer, CircleSerializer
 from scenic.models import Scenic, Sce_spider_comment
+from user.helpers import CustomAuthentication
 
 
 class CityView(RetrieveAPIView, ListAPIView):
@@ -80,13 +81,30 @@ def cal_hot(request):
     return HttpResponse('修改成功')
 
 
-# class CircleView(RetrieveAPIView, ListAPIView):
-#     serializer_class = CircleSerializer
-#
-#     def get_queryset(self):
-#         user_id = 1
-#
-#         circles = Circle.objects.raw(f'select ')
+class CircleView(RetrieveAPIView, ListAPIView):
+
+    serializer_class = CircleSerializer
+    authentication_classes = (CustomAuthentication, )
+
+    def get_queryset(self):
+        user = self.request.user
+        user_id = user.user_id
+        # user_id=2
+        if user_id:
+            circles = Circle.objects.raw(f'select t1.circle_id, t1.name, t1.level, t1.avatar, t1.abstract, t1.user_nums,'
+                                         f' t3.name as city_name '
+                                         f'from circle t1 '
+                                         f'inner join user_circle t2'
+                                         f' on t1.circle_id=t2.circle_id '
+                                         f'inner join city t3 on t1.city_id=t3.city_id '
+                                         f'where t2.user_id={user.user_id}')
+            return circles
+
+    def get(self, request, *args, **kwargs):
+        return RetrieveAPIView.get(self, request, *args, **kwargs) \
+            if 'pk' in kwargs else ListAPIView.get(self, request, *args, **kwargs)
+
+
 
 
 
