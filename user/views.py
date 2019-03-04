@@ -49,6 +49,17 @@ def UserLogin(request):
 
 
 @api_view(['POST'])
+def Userlogout(request):
+    token = request.auth
+    redis_client = get_redis_connection()
+    redis_client.delete(token)
+    return JsonResponse({
+        'code': 200,
+        'msg': '退出登录成功！'
+    })
+
+
+@api_view(['POST'])
 def UserRegister(request):
     # 获取POST参数
     username = request.POST.get('username')
@@ -101,9 +112,10 @@ class FriendViewSet(mixins.CreateModelMixin,
 
     def get_queryset(self):
         user = self.request.user
-        friends = Relation.objects.filter(user_id=user.user_id, is_delete=False).only('friend').select_related('friend')
+        friends = Relation.objects.filter(user_id=9, is_delete=False).only('friend').select_related('friend')
         friends_list = [item.friend_id for item in friends]
-        queryset = User.objects.filter(user_id__in=friends_list).all()
+        queryset = User.objects.filter(user_id__in=friends_list).all().select_related('region')
+        # queryset = User.objects.raw('''select `users`.`user_id`, `users`.`region_id`, `users`.`username`, `users`.`password`, `users`.`nickname`, `users`.`real_name`, `users`.`age`, `users`.`gender`, `users`.`card_id`, `users`.`tel`, `users`.`email`, `users`.`avatar`, `users`.`signature`, `users`.`is_delete`, `users`.`lastvisit`, `region`.`region_id`, `region`.`city_id`, `region`.`name`, `region`.`sce_nums` FROM `users` LEFT OUTER JOIN `region` ON (`users`.`region_id` = `region`.`region_id`) WHERE `users`.`user_id` IN (2, 10, 11);''')
         return queryset
 
     def create(self, request, *args, **kwargs):
@@ -152,8 +164,3 @@ class FriendViewSet(mixins.CreateModelMixin,
                 'code': 10004,
                 'msg': '用户不存在！'
             })
-
-
-
-
-
