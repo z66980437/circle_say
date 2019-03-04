@@ -31,7 +31,7 @@ class Scenic(models.Model):
     tel = models.CharField(max_length=50, blank=True, null=True, verbose_name='电话号码')
 
     # 景点系统推荐热度，用下面爬虫抓的数据算
-    hot_rate = models.DecimalField(max_digits=5, decimal_places=2, null=True, verbose_name='热度')
+    hot_rate = models.DecimalField(max_digits=7, decimal_places=2, null=True, verbose_name='热度')
 
     class Meta:
         # managed = False
